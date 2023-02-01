@@ -2,7 +2,7 @@
 class Database
 {
     private $host = "localhost";
-    private $database_name = "phpapidb";
+    private $database_name = "mavisa";
     private $username = "root";
     private $password = "";
     public $conn;

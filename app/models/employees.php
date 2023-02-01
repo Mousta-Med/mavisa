@@ -4,7 +4,7 @@ class Employee
     // Connection
     private $conn;
     // Table
-    private $db_table = "Employee";
+    private $db_table = "user";
     // Columns
     public $id;
     public $name;
