@@ -7,28 +7,34 @@ include_once 'app/models/employees.php';
 $database = new Database();
 $db = $database->getConnection();
 $items = new Employee($db);
-$stmt = $items->getEmployees();
+$stmt = $items->getUsers();
 $itemCount = $stmt->rowCount();
 
 echo json_encode($itemCount);
 if ($itemCount > 0) {
 
-    $employeeArr = array();
-    $employeeArr["body"] = array();
-    $employeeArr["itemCount"] = $itemCount;
+    $usersArr = array();
+    $usersArr["data"] = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
-        $e = array(
-            "id" => $id,
-            "name" => $name,
-            "email" => $email,
-            "age" => $age,
-            "designation" => $designation,
-            "created" => $created
+        $users = array(
+            "user_id" => $user_id,
+            "user_token" => $user_token,
+            "user_firstname" => $user_firstname,
+            "user_lastname" => $user_lastname,
+            "user_birthdate" => $user_birthdate,
+            "user_nationality" => $user_nationality,
+            "family_situation" => $family_situation,
+            "user_adresse" => $user_adresse,
+            "visa_type" => $visa_type,
+            "Date_of_departure" => $Date_of_departure,
+            "arrival_date" => $arrival_date,
+            "voyage_document_type" => $voyage_document_type,
+            "voyage_document_number" => $voyage_document_number
         );
-        array_push($employeeArr["body"], $e);
+        array_push($usersArr["data"], $users);
     }
-    echo json_encode($employeeArr);
+    echo json_encode($usersArr);
 } else {
     http_response_code(404);
     echo json_encode(

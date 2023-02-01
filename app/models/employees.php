@@ -18,9 +18,9 @@ class Employee
         $this->conn = $db;
     }
     // GET ALL
-    public function getEmployees()
+    public function getUsers()
     {
-        $sqlQuery = "SELECT id, name, email, age, designation, created FROM " . $this->db_table . "";
+        $sqlQuery = "SELECT * FROM " . $this->db_table . "";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->execute();
         return $stmt;
