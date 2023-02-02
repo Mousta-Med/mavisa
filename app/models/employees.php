@@ -6,12 +6,19 @@ class Employee
     // Table
     private $db_table = "user";
     // Columns
-    public $id;
-    public $name;
-    public $email;
-    public $age;
-    public $designation;
-    public $created;
+    public $user_id;
+    public $user_token;
+    public $user_firstname;
+    public $user_lastname;
+    public $user_birthdate;
+    public $user_nationality;
+    public $family_situation;
+    public $user_adresse;
+    public $visa_type;
+    public $Date_of_departure;
+    public $arrival_date;
+    public $voyage_document_type;
+    public $voyage_document_number;
     // Db connection
     public function __construct($db)
     {
@@ -26,32 +33,42 @@ class Employee
         return $stmt;
     }
     // CREATE
-    public function createEmployee()
+    public function createUser()
     {
-        $sqlQuery = "INSERT INTO
-                        " . $this->db_table . "
-                    SET
-                        name = :name, 
-                        email = :email, 
-                        age = :age, 
-                        designation = :designation, 
-                        created = :created";
+        $sqlQuery = "INSERT INTO user (user_token, user_firstname, user_lastname, user_birthdate, user_nationality, 
+        family_situation, user_adresse, visa_type, Date_of_departure, arrival_date, voyage_document_type, voyage_document_number) VALUES
+         (:user_token, :user_firstname, :user_lastname, :user_birthdate, :user_nationality, :family_situation, :user_adresse, 
+         :visa_type, :Date_of_departure, :arrival_date, :voyage_document_type, :voyage_document_number)";
 
         $stmt = $this->conn->prepare($sqlQuery);
 
         // sanitize
-        $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->age = htmlspecialchars(strip_tags($this->age));
-        $this->designation = htmlspecialchars(strip_tags($this->designation));
-        $this->created = htmlspecialchars(strip_tags($this->created));
+        $this->user_token = htmlspecialchars(strip_tags($this->user_token));
+        $this->user_firstname = htmlspecialchars(strip_tags($this->user_firstname));
+        $this->user_lastname = htmlspecialchars(strip_tags($this->user_lastname));
+        $this->user_birthdate = htmlspecialchars(strip_tags($this->user_birthdate));
+        $this->user_nationality = htmlspecialchars(strip_tags($this->user_nationality));
+        $this->family_situation = htmlspecialchars(strip_tags($this->family_situation));
+        $this->user_adresse = htmlspecialchars(strip_tags($this->user_adresse));
+        $this->visa_type = htmlspecialchars(strip_tags($this->visa_type));
+        $this->Date_of_departure = htmlspecialchars(strip_tags($this->Date_of_departure));
+        $this->arrival_date = htmlspecialchars(strip_tags($this->arrival_date));
+        $this->voyage_document_type = htmlspecialchars(strip_tags($this->voyage_document_type));
+        $this->voyage_document_number = htmlspecialchars(strip_tags($this->voyage_document_number));
 
         // bind data
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":age", $this->age);
-        $stmt->bindParam(":designation", $this->designation);
-        $stmt->bindParam(":created", $this->created);
+        $stmt->bindParam(":user_token", $this->user_token);
+        $stmt->bindParam(":user_firstname", $this->user_firstname);
+        $stmt->bindParam(":user_lastname", $this->user_lastname);
+        $stmt->bindParam(":user_birthdate", $this->user_birthdate);
+        $stmt->bindParam(":user_nationality", $this->user_nationality);
+        $stmt->bindParam(":family_situation", $this->family_situation);
+        $stmt->bindParam(":user_adresse", $this->user_adresse);
+        $stmt->bindParam(":visa_type", $this->visa_type);
+        $stmt->bindParam(":Date_of_departure", $this->Date_of_departure);
+        $stmt->bindParam(":arrival_date", $this->arrival_date);
+        $stmt->bindParam(":voyage_document_type", $this->voyage_document_type);
+        $stmt->bindParam(":voyage_document_number", $this->voyage_document_number);
 
         if ($stmt->execute()) {
             return true;
@@ -59,61 +76,65 @@ class Employee
         return false;
     }
     // READ single
-    public function getSingleEmployee()
+    public function getSingleUser()
     {
-        $sqlQuery = "SELECT
-                        id, 
-                        name, 
-                        email, 
-                        age, 
-                        designation, 
-                        created
-                      FROM
-                        " . $this->db_table . "
-                    WHERE 
-                       id = ?
-                    LIMIT 0,1";
+        $sqlQuery = "SELECT * FROM `user`WHERE user_id = ?";
         $stmt = $this->conn->prepare($sqlQuery);
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(1, $this->user_id);
         $stmt->execute();
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->name = $dataRow['name'];
-        $this->email = $dataRow['email'];
-        $this->age = $dataRow['age'];
-        $this->designation = $dataRow['designation'];
-        $this->created = $dataRow['created'];
+        $this->user_token = $dataRow['user_token'];
+        $this->user_firstname = $dataRow['user_firstname'];
+        $this->user_lastname = $dataRow['user_lastname'];
+        $this->user_birthdate = $dataRow['user_birthdate'];
+        $this->user_nationality = $dataRow['user_nationality'];
+        $this->family_situation = $dataRow['family_situation'];
+        $this->user_adresse = $dataRow['user_adresse'];
+        $this->visa_type = $dataRow['visa_type'];
+        $this->Date_of_departure = $dataRow['Date_of_departure'];
+        $this->arrival_date = $dataRow['arrival_date'];
+        $this->voyage_document_type = $dataRow['voyage_document_type'];
+        $this->voyage_document_number = $dataRow['voyage_document_number'];
     }
     // UPDATE
-    public function updateEmployee()
+    public function updateUser()
     {
-        $sqlQuery = "UPDATE
-                        " . $this->db_table . "
-                    SET
-                        name = :name, 
-                        email = :email, 
-                        age = :age, 
-                        designation = :designation, 
-                        created = :created
-                    WHERE 
-                        id = :id";
+        $sqlQuery = "UPDATE user SET user_token = :user_token, user_firstname = :user_firstname, user_lastname = :user_lastname, 
+        user_birthdate = :user_birthdate, user_nationality = :user_nationality, family_situation = :family_situation, user_adresse = :user_adresse, 
+        visa_type = :visa_type, Date_of_departure = :Date_of_departure, arrival_date = :arrival_date, voyage_document_type = :voyage_document_type, 
+        voyage_document_number = :voyage_document_number WHERE user_id = :user_id";
 
         $stmt = $this->conn->prepare($sqlQuery);
 
-        $this->name = htmlspecialchars(strip_tags($this->name));
-        $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->age = htmlspecialchars(strip_tags($this->age));
-        $this->designation = htmlspecialchars(strip_tags($this->designation));
-        $this->created = htmlspecialchars(strip_tags($this->created));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->user_token = htmlspecialchars(strip_tags($this->user_token));
+        $this->user_firstname = htmlspecialchars(strip_tags($this->user_firstname));
+        $this->user_lastname = htmlspecialchars(strip_tags($this->user_lastname));
+        $this->user_birthdate = htmlspecialchars(strip_tags($this->user_birthdate));
+        $this->user_nationality = htmlspecialchars(strip_tags($this->user_nationality));
+        $this->family_situation = htmlspecialchars(strip_tags($this->family_situation));
+        $this->user_adresse = htmlspecialchars(strip_tags($this->user_adresse));
+        $this->visa_type = htmlspecialchars(strip_tags($this->visa_type));
+        $this->Date_of_departure = htmlspecialchars(strip_tags($this->Date_of_departure));
+        $this->arrival_date = htmlspecialchars(strip_tags($this->arrival_date));
+        $this->voyage_document_type = htmlspecialchars(strip_tags($this->voyage_document_type));
+        $this->voyage_document_number = htmlspecialchars(strip_tags($this->voyage_document_number));
+        $this->user_id = htmlspecialchars(strip_tags($this->user_id));
 
         // bind data
-        $stmt->bindParam(":name", $this->name);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":age", $this->age);
-        $stmt->bindParam(":designation", $this->designation);
-        $stmt->bindParam(":created", $this->created);
-        $stmt->bindParam(":id", $this->id);
+        $stmt->bindParam(":user_token", $this->user_token);
+        $stmt->bindParam(":user_firstname", $this->user_firstname);
+        $stmt->bindParam(":user_lastname", $this->user_lastname);
+        $stmt->bindParam(":user_birthdate", $this->user_birthdate);
+        $stmt->bindParam(":user_nationality", $this->user_nationality);
+        $stmt->bindParam(":family_situation", $this->family_situation);
+        $stmt->bindParam(":user_adresse", $this->user_adresse);
+        $stmt->bindParam(":visa_type", $this->visa_type);
+        $stmt->bindParam(":Date_of_departure", $this->Date_of_departure);
+        $stmt->bindParam(":arrival_date", $this->arrival_date);
+        $stmt->bindParam(":voyage_document_type", $this->voyage_document_type);
+        $stmt->bindParam(":voyage_document_number", $this->voyage_document_number);
+        $stmt->bindParam(":user_id", $this->user_id);
 
         if ($stmt->execute()) {
             return true;
@@ -121,14 +142,14 @@ class Employee
         return false;
     }
     // DELETE
-    function deleteEmployee()
+    function deleteUser()
     {
-        $sqlQuery = "DELETE FROM " . $this->db_table . " WHERE id = ?";
+        $sqlQuery = "DELETE FROM user WHERE user_id = ?";
         $stmt = $this->conn->prepare($sqlQuery);
 
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->user_id = htmlspecialchars(strip_tags($this->user_id));
 
-        $stmt->bindParam(1, $this->id);
+        $stmt->bindParam(1, $this->user_id);
 
         if ($stmt->execute()) {
             return true;

@@ -15,9 +15,9 @@ $item = new Employee($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$item->id = $data->id;
+$item->user_id = $data->user_id;
 
-if ($item->deleteEmployee()) {
+if ($item->deleteUser()) {
     echo json_encode("Employee deleted.");
 } else {
     echo json_encode("Data could not be deleted");

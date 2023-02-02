@@ -9,23 +9,30 @@ include_once 'app/models/employees.php';
 $database = new Database();
 $db = $database->getConnection();
 $item = new Employee($db);
-$item->id = isset($iod) ? $iod : die();
+$item->user_id = isset($iod) ? $iod : die();
 
-$item->getSingleEmployee();
-if ($item->name != null) {
+$item->getSingleUser();
+if ($item->user_firstname != null) {
     // create array
-    $emp_arr = array(
-        "id" =>  $item->id,
-        "name" => $item->name,
-        "email" => $item->email,
-        "age" => $item->age,
-        "designation" => $item->designation,
-        "created" => $item->created
+    $user_arr = array(
+        "user_id" => $item->user_id,
+        "user_token" => $item->user_token,
+        "user_firstname" => $item->user_firstname,
+        "user_lastname" => $item->user_lastname,
+        "user_birthdate" => $item->user_birthdate,
+        "user_nationality" => $item->user_nationality,
+        "family_situation" => $item->family_situation,
+        "user_adresse" => $item->user_adresse,
+        "visa_type" => $item->visa_type,
+        "Date_of_departure" => $item->Date_of_departure,
+        "arrival_date" => $item->arrival_date,
+        "voyage_document_type" => $item->voyage_document_type,
+        "voyage_document_number" => $item->voyage_document_number
     );
 
     http_response_code(200);
-    echo json_encode($emp_arr);
+    echo json_encode($user_arr);
 } else {
     http_response_code(404);
-    echo json_encode("Employee not found.");
+    echo json_encode("User not found.");
 }
