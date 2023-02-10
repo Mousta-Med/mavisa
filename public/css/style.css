@@ -1,0 +1,20 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+
+
+.home {
+    height: 600px;
+    background-image: url('https://wallpapercave.com/wp/wp4144066.jpg');
+    background-repeat: no-repeat, no-repeat;
+    background-size: 50% 100%;
+    background-position: right top;
+}
+
+body {
+    background-color: #f6f3e8;
+
+}
