@@ -78,7 +78,7 @@ class Employee
     // READ single
     public function getSingleUser()
     {
-        $sqlQuery = "SELECT * FROM `user`WHERE user_id = ?";
+        $sqlQuery = "SELECT * FROM user WHERE user_id = ?";
         $stmt = $this->conn->prepare($sqlQuery);
         $stmt->bindParam(1, $this->user_id);
         $stmt->execute();
