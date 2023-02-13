@@ -1,5 +1,5 @@
 <?php
-class Employee
+class user
 {
     // Connection
     private $conn;

@@ -13,31 +13,30 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="home">
-            <nav class="navbar navbar-expand-sm navbar-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="">Mavisa</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="mynavbar">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="home">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="rooms">Rooms</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="headerinfo ">
-                <p>hfjkfgdsjgfdsh d qfhgkfjdgsqf dqfdgjfsdhgfjdqsjgjdsgfj fqs dsghjf
-                </p>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-black">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="">Mavisa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="book">Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="file">File</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="logout">logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
+    </nav>
+    <div id="app">
+        <p v-if="showitme">{{ name }}</p>
+        <button class="btn btn-primary" v-on:click="toggleshow">click</button>
     </div>
 
     <script src="/mavisa/public/js/script.js"></script>

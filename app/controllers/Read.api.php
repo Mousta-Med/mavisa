@@ -3,10 +3,10 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 include_once 'app/models/database.php';
-include_once 'app/models/employees.php';
+include_once 'app/models/users.php';
 $database = new Database();
 $db = $database->getConnection();
-$items = new Employee($db);
+$items = new user($db);
 $stmt = $items->getUsers();
 $itemCount = $stmt->rowCount();
 

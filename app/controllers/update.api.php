@@ -6,18 +6,18 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once 'app/models/database.php';
-include_once 'app/models/employees.php';
+include_once 'app/models/users.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new Employee($db);
+$item = new user($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
 $item->user_id = $data->user_id;
 
-// employee values
+// user values
 $item->user_token = $data->user_token;
 $item->user_firstname = $data->user_firstname;
 $item->user_lastname = $data->user_lastname;
@@ -32,7 +32,7 @@ $item->voyage_document_type = $data->voyage_document_type;
 $item->voyage_document_number = $data->voyage_document_number;
 
 if ($item->updateUser()) {
-    echo json_encode("Employee data updated.");
+    echo json_encode("user data updated.");
 } else {
     echo json_encode("Data could not be updated");
 }

@@ -6,19 +6,19 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once 'app/models/database.php';
-include_once 'app/models/employees.php';
+include_once 'app/models/users.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$item = new Employee($db);
+$item = new user($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
 $item->user_id = $data->user_id;
 
 if ($item->deleteUser()) {
-    echo json_encode("Employee deleted.");
+    echo json_encode("user deleted.");
 } else {
     echo json_encode("Data could not be deleted");
 }

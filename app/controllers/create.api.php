@@ -5,10 +5,10 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 include_once 'app/models/database.php';
-include_once 'app/models/employees.php';
+include_once 'app/models/user.php';
 $database = new Database();
 $db = $database->getConnection();
-$item = new Employee($db);
+$item = new user($db);
 $data = json_decode(file_get_contents("php://input"));
 
 $item->user_token = $data->user_token;
@@ -25,7 +25,7 @@ $item->voyage_document_type = $data->voyage_document_type;
 $item->voyage_document_number = $data->voyage_document_number;
 
 if ($item->createUser()) {
-    echo 'Employee created successfully.';
+    echo 'user created successfully.';
 } else {
-    echo 'Employee could not be created.';
+    echo 'user could not be created.';
 }
