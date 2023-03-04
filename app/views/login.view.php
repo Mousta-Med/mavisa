@@ -23,27 +23,17 @@
             <div class="collapse navbar-collapse" id="mynavbar">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="book">Book</a>
+                        <a class="nav-link" href="book">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="file">File</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout">logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="home">
-        <div class="header_info">
-            <h1>MaVisa</h1>
-            <p>Get Your Visa Now</p>
-            <button class="btn btn-dark">Visa</button>
-        </div>
+    <div class="login">
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/mavisa/public/js/script.js"></script>

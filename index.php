@@ -29,6 +29,15 @@ if (empty($_GET['page'])) {
         case "delete":
             require "app/controllers/delete.api.php";
             break;
+        case "home":
+            require "app/views/home.view.php";
+            break;
+        case "file":
+            require "app/views/file.view.php";
+            break;
+        case "book":
+            require "app/views/book.view.php";
+            break;
         default:
             require "app/views/404.view.php";
             break;

@@ -1,20 +1,21 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: GET");
 
 include_once 'app/models/database.php';
-include_once 'app/models/users.php';
+include_once 'app/models/Users.php';
 $database = new Database();
 $db = $database->getConnection();
 $items = new user($db);
 $stmt = $items->getUsers();
 $itemCount = $stmt->rowCount();
 
-echo json_encode($itemCount);
+// echo json_encode($itemCount);
 if ($itemCount > 0) {
 
     $usersArr = array();
-    $usersArr["data"] = array();
+    // $usersArr["data"] = array();
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
         $users = array(
@@ -32,7 +33,8 @@ if ($itemCount > 0) {
             "voyage_document_type" => $voyage_document_type,
             "voyage_document_number" => $voyage_document_number
         );
-        array_push($usersArr["data"], $users);
+        // array_push($usersArr["data"], $users);
+        array_push($usersArr, $users);
     }
     echo json_encode($usersArr);
 } else {
