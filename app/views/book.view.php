@@ -38,6 +38,18 @@
             </div>
         </div>
     </nav>
+    <?php
+    if (!empty($_SESSION['alert'])) {
+    ?>
+        <div class="msg">
+            <div class="alert alert-<?= $_SESSION['alert']['type'] ?>" role="alert">
+                <?= $_SESSION['alert']['msg'] ?>
+            </div>
+        </div>
+    <?php
+    }
+    unset($_SESSION['alert']);
+    ?>
     <div class="book">
         <div id="app">
             <p>{{ message }}</p>

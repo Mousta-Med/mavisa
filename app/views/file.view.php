@@ -32,13 +32,35 @@
             <a class="nav-link" href="file">File</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="logout">logout</a>
+            <?php
+            if (isset($_SESSION['user'])) {
+            ?>
+              <a class="nav-link" href="logout">logout</a>
+            <?php
+            } else {
+            ?>
+              <a class="nav-link" href="login">login</a>
+            <?php
+            }
+            ?>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <div class="file">
+    <?php
+    if (!empty($_SESSION['alert'])) {
+    ?>
+      <div class="msg">
+        <div class="alert text-center alert-<?= $_SESSION['alert']['type'] ?>" role="alert">
+          <?= $_SESSION['alert']['msg'] ?>
+        </div>
+      </div>
+    <?php
+    }
+    unset($_SESSION['alert']);
+    ?>
     <div id="app">
       <div class="container">
 
@@ -89,7 +111,7 @@
             <input type="text" class="form-control" id="typeDocument" name="voyage_document_type" v-model="voyage_document_type" placeholder="Entrez le type de document de voyage" required>
           </div>
           <div class="col-12">
-            <input type="button" class="btn btn-primary" @click="createUser()" value="Send">
+            <input type="button" class="btn btn-primary" @click="onsubmit()" value="Send">
           </div>
         </form>
       </div>

@@ -1,6 +1,8 @@
 <?php
+session_start();
 
 require_once "app/controllers/Home.controller.php";
+$homecontroller = new homecontroller;
 
 if (empty($_GET['page'])) {
     require "app/views/home.view.php";
@@ -35,8 +37,11 @@ if (empty($_GET['page'])) {
         case "file":
             require "app/views/file.view.php";
             break;
+        case "login":
+            require "app/views/login.view.php";
+            break;
         case "book":
-            require "app/views/book.view.php";
+            $homecontroller->bookpage();
             break;
         default:
             require "app/views/404.view.php";
