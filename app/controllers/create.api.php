@@ -29,3 +29,19 @@ if ($item->createUser()) {
 } else {
     echo 'user could not be created.';
 }
+
+
+// function generateToken($length)
+// {
+//     // Generate a random string of bytes
+//     $bytes = random_bytes($length);
+
+//     // Convert the bytes to a string of hexadecimal digits
+//     $token = bin2hex($bytes);
+
+//     // Return the token
+//     return $token;
+// }
+
+// $token = generateToken(4);
+// echo 'MA' . $token;

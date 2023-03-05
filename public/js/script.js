@@ -32,7 +32,19 @@ var app = new Vue({
         });
     },
     onsubmit: function () {
-      if (this.user_firstname !== "") {
+      if (
+        this.user_firstname !== "" &&
+        this.user_lastname !== "" &&
+        this.user_birthdate !== "" &&
+        this.user_nationality !== "" &&
+        this.family_situation !== "" &&
+        this.user_adresse !== "" &&
+        this.visa_type !== "" &&
+        this.Date_of_departure !== "" &&
+        this.arrival_date !== "" &&
+        this.voyage_document_number !== "" &&
+        this.voyage_document_type !== ""
+      ) {
         axios
           .post("http://localhost/mavisa/create", {
             user_token: this.user_token,
