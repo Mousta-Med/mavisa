@@ -12,23 +12,11 @@ class homecontroller
         if (!isset($_SESSION['user'])) {
             $_SESSION['alert'] = [
                 'type' => 'danger',
-                'msg' => 'You Must Create File or login'
+                'msg' => 'You Must Create File'
             ];
             header("location: /mavisa/file");
         } else {
             require "app/views/book.view.php";
-        }
-    }
-    public function  loginpage()
-    {
-        if (isset($_SESSION['user'])) {
-            $_SESSION['alert'] = [
-                'type' => 'danger',
-                'msg' => 'you already logged in'
-            ];
-            header("location: /mavisa/file");
-        } else {
-            require "app/views/login.view.php";
         }
     }
 }

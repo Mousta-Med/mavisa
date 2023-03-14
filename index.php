@@ -37,9 +37,6 @@ if (empty($_GET['page'])) {
         case "file":
             require "app/views/file.view.php";
             break;
-        case "login":
-            require "app/views/login.view.php";
-            break;
         case "book":
             $homecontroller->bookpage();
             break;

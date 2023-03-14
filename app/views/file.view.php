@@ -31,19 +31,6 @@
           <li class="nav-item">
             <a class="nav-link" href="file">File</a>
           </li>
-          <li class="nav-item">
-            <?php
-            if (isset($_SESSION['user'])) {
-            ?>
-              <a class="nav-link" href="logout">logout</a>
-            <?php
-            } else {
-            ?>
-              <a class="nav-link" href="login">login</a>
-            <?php
-            }
-            ?>
-          </li>
         </ul>
       </div>
     </div>
@@ -62,8 +49,8 @@
     unset($_SESSION['alert']);
     ?>
     <div id="app">
-      <div class="container">
-
+      <h1 class="text-center mt-5">Create File</h1>
+      <div class="mt-5 container">
         <form class="row g-3">
           <input type="hidden" name="user_token" v-model="user_token" value="DZRdsdj675">
           <div class="col-md-6">

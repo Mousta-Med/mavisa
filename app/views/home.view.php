@@ -31,9 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="file">File</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout">logout</a>
-                    </li>
                 </ul>
             </div>
         </div>

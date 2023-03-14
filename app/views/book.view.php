@@ -31,9 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="file">File</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout">logout</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -52,10 +49,7 @@
     ?>
     <div class="book">
         <div id="app">
-            <p>{{ message }}</p>
-            <ul v-for='user in users'>
-                <li>{{ user.user_firstname }}</li>
-            </ul>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
