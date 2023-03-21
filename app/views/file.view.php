@@ -31,6 +31,15 @@
           <li class="nav-item">
             <a class="nav-link" href="file">File</a>
           </li>
+          <?php
+          if (!empty($_SESSION['user'])) {
+          ?>
+            <li class="nav-item">
+              <a class="nav-link" href="logout">logout</a>
+            </li>
+          <?php
+          }
+          ?>
         </ul>
       </div>
     </div>
@@ -52,7 +61,6 @@
       <h1 class="text-center mt-5">Create File</h1>
       <div class="mt-5 container">
         <form class="row g-3">
-          <input type="hidden" name="user_token" v-model="user_token" value="DZRdsdj675">
           <div class="col-md-6">
             <label for="nom" class="form-label">Nom</label>
             <input type="text" class="form-control" id="nom" name="user_firstname" v-model="user_firstname" placeholder="Entrez votre nom" required>
@@ -98,7 +106,7 @@
             <input type="text" class="form-control" id="typeDocument" name="voyage_document_type" v-model="voyage_document_type" placeholder="Entrez le type de document de voyage" required>
           </div>
           <div class="col-12">
-            <input type="button" class="btn btn-primary" @click="onsubmit()" value="Send">
+            <input type="button" class="btn btn-primary" @click="onsubmit()" value="Create">
           </div>
         </form>
       </div>

@@ -1,7 +1,6 @@
 var app = new Vue({
   el: "#app",
   data: {
-    message: "hello world!",
     user_token: "",
     user_firstname: "",
     user_lastname: "",
@@ -24,6 +23,16 @@ var app = new Vue({
     getUsers: function () {
       axios
         .get("http://localhost/mavisa/read")
+        .then(function (response) {
+          app.users = response.data;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    gesingletUsers: function () {
+      axios
+        .get("http://localhost/mavisa/single_read")
         .then(function (response) {
           app.users = response.data;
         })
@@ -61,7 +70,6 @@ var app = new Vue({
             voyage_document_type: this.voyage_document_type,
           })
           .then((response) => this.users.push(response.data))
-          .then(app.resetForm())
           .catch(function (response) {
             console.log(response);
           });
@@ -75,19 +83,24 @@ var app = new Vue({
 
     // },
 
-    resetForm: function () {
-      this.user_token = "";
-      this.user_firstname = "";
-      this.user_lastname = "";
-      this.user_birthdate = "";
-      this.user_nationality = "";
-      this.family_situation = "";
-      this.user_adresse = "";
-      this.visa_type = "";
-      this.Date_of_departure = "";
-      this.arrival_date = "";
-      this.voyage_document_type = "";
-      this.voyage_document_number = "";
+    // resetForm: function () {
+    //   this.user_token = "";
+    //   this.user_firstname = "";
+    //   this.user_lastname = "";
+    //   this.user_birthdate = "";
+    //   this.user_nationality = "";
+    //   this.family_situation = "";
+    //   this.user_adresse = "";
+    //   this.visa_type = "";
+    //   this.Date_of_departure = "";
+    //   this.arrival_date = "";
+    //   this.voyage_document_type = "";
+    //   this.voyage_document_number = "";
+    // },
+    copytoclipboard: function () {
+      var copyText = document.getElementById("token").innerHTML;
+      navigator.clipboard.writeText(copyText);
+      alert("The text copied to clipboard");
     },
   },
 });

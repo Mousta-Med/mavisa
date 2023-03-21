@@ -31,6 +31,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="file">File</a>
                     </li>
+                    <?php
+                    if (!empty($_SESSION['user'])) {
+                    ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout">logout</a>
+                        </li>
+                    <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </div>

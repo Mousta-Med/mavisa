@@ -35,7 +35,13 @@ if (empty($_GET['page'])) {
             require "app/views/home.view.php";
             break;
         case "file":
-            require "app/views/file.view.php";
+            $homecontroller->filepage();
+            break;
+        case "login":
+            require "app/views/login.view.php";
+            break;
+        case "logout":
+            $homecontroller->logout();
             break;
         case "book":
             $homecontroller->bookpage();

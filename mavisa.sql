@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2023 at 09:51 AM
+-- Generation Time: Mar 20, 2023 at 10:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -39,8 +39,16 @@ CREATE TABLE `user` (
   `visa_type` varchar(200) NOT NULL,
   `Date_of_departure` date NOT NULL,
   `arrival_date` date NOT NULL,
-  `type_et_numéro_de_document_de_voyage` varchar(200) NOT NULL
+  `voyage_document_type` varchar(200) NOT NULL,
+  `voyage_document_number` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`user_id`, `user_token`, `user_firstname`, `user_lastname`, `user_birthdate`, `user_nationality`, `family_situation`, `user_adresse`, `visa_type`, `Date_of_departure`, `arrival_date`, `voyage_document_type`, `voyage_document_number`) VALUES
+(17, 'MAa5ada069', 'Bruno', 'Burns', '2011-11-09', 'Neque tempore aliqu', 'Veritatis reiciendis', 'Accusamus rerum offi', 'Commodi aspernatur o', '1985-11-07', '1985-02-17', 'Ab itaque proident ', 506);
 
 --
 -- Indexes for dumped tables
@@ -60,7 +68,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
