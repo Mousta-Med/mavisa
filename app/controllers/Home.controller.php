@@ -28,6 +28,18 @@ class homecontroller
             require "app/views/file.view.php";
         }
     }
+    public function  login()
+    {
+        if (isset($_SESSION['user'])) {
+            $_SESSION['alert'] = [
+                'type' => 'danger',
+                'msg' => "You C'ant Logout"
+            ];
+            header("location: /mavisa/book");
+        } else {
+            require "app/views/login.view.php";
+        }
+    }
     public function  logout()
     {
         if (!isset($_SESSION['user'])) {

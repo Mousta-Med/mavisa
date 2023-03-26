@@ -100,10 +100,10 @@ class user
     // UPDATE
     public function updateUser()
     {
-        $sqlQuery = "UPDATE user SET user_token = :user_token, user_firstname = :user_firstname, user_lastname = :user_lastname, 
+        $sqlQuery = "UPDATE user SET user_firstname = :user_firstname, user_lastname = :user_lastname, 
         user_birthdate = :user_birthdate, user_nationality = :user_nationality, family_situation = :family_situation, user_adresse = :user_adresse, 
         visa_type = :visa_type, Date_of_departure = :Date_of_departure, arrival_date = :arrival_date, voyage_document_type = :voyage_document_type, 
-        voyage_document_number = :voyage_document_number WHERE user_id = :user_id";
+        voyage_document_number = :voyage_document_number WHERE user_token = :user_token";
 
         $stmt = $this->conn->prepare($sqlQuery);
 
@@ -119,7 +119,7 @@ class user
         $this->arrival_date = htmlspecialchars(strip_tags($this->arrival_date));
         $this->voyage_document_type = htmlspecialchars(strip_tags($this->voyage_document_type));
         $this->voyage_document_number = htmlspecialchars(strip_tags($this->voyage_document_number));
-        $this->user_id = htmlspecialchars(strip_tags($this->user_id));
+        // $this->user_id = htmlspecialchars(strip_tags($this->user_id));
 
         // bind data
         $stmt->bindParam(":user_token", $this->user_token);
@@ -134,7 +134,7 @@ class user
         $stmt->bindParam(":arrival_date", $this->arrival_date);
         $stmt->bindParam(":voyage_document_type", $this->voyage_document_type);
         $stmt->bindParam(":voyage_document_number", $this->voyage_document_number);
-        $stmt->bindParam(":user_id", $this->user_id);
+        // $stmt->bindParam(":user_id", $this->user_id);
 
         if ($stmt->execute()) {
             return true;
@@ -155,5 +155,22 @@ class user
             return true;
         }
         return false;
+    }
+
+    function login($token)
+    {
+        $fetch_user_by_email = "SELECT * FROM `user` WHERE `user_token`=:token";
+        $query_stmt = $this->conn->prepare($fetch_user_by_email);
+        $query_stmt->bindValue(':token', $token, PDO::PARAM_STR);
+        $query_stmt->execute();
+        $result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+        if ($query_stmt->rowCount()) {
+            return $result;
+        } else {
+            return false;
+        }
+    }
+    function book($date)
+    {
     }
 }

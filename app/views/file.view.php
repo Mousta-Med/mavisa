@@ -11,53 +11,56 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
   <link rel="stylesheet" type="text/css" href="/MaVisa/public/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="/MaVisa/public/css/main.min.css" />
+  <script src="/mavisa/public/js/main.min.js"></script>
+
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-black">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="home">Mavisa</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="mynavbar">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="home">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="book">Book</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="file">File</a>
-          </li>
-          <?php
-          if (!empty($_SESSION['user'])) {
-          ?>
+  <div id="app">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-black">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="home">Mavisa</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mynavbar">
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="logout">logout</a>
+              <a class="nav-link" href="home">Home</a>
             </li>
-          <?php
-          }
-          ?>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="file">
-    <?php
-    if (!empty($_SESSION['alert'])) {
-    ?>
-      <div class="msg">
-        <div class="alert text-center alert-<?= $_SESSION['alert']['type'] ?>" role="alert">
-          <?= $_SESSION['alert']['msg'] ?>
+            <li class="nav-item">
+              <a class="nav-link" href="book">Book</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="file">File</a>
+            </li>
+            <?php
+            if (!empty($_SESSION['user'])) {
+            ?>
+              <li class="nav-item">
+                <a role="button" class="nav-link" @click="resetForm()">logout</a>
+              </li>
+            <?php
+            }
+            ?>
+          </ul>
         </div>
       </div>
-    <?php
-    }
-    unset($_SESSION['alert']);
-    ?>
-    <div id="app">
+    </nav>
+    <div class="file">
+      <?php
+      if (!empty($_SESSION['alert'])) {
+      ?>
+        <div class="msg">
+          <div class="alert text-center alert-<?= $_SESSION['alert']['type'] ?>" role="alert">
+            <?= $_SESSION['alert']['msg'] ?>
+          </div>
+        </div>
+      <?php
+      }
+      unset($_SESSION['alert']);
+      ?>
       <h1 class="text-center mt-5">Create File</h1>
       <div class="mt-5 container">
         <form class="row g-3">
@@ -105,12 +108,55 @@
             <label for="typeDocument" class="form-label">Type de document de voyage</label>
             <input type="text" class="form-control" id="typeDocument" name="voyage_document_type" v-model="voyage_document_type" placeholder="Entrez le type de document de voyage" required>
           </div>
-          <div class="col-12">
-            <input type="button" class="btn btn-primary" @click="onsubmit()" value="Create">
+          <div class="d-flex justify-content-between">
+            <?php
+            if (empty($_SESSION['user'])) {
+            ?>
+              <input type="button" class="btn btn-primary" @click="onsubmit()" value="Create">
+            <?php
+            } else {
+            ?>
+              <input type="button" class="btn btn-primary" @click="updateUser()" value="Update">
+            <?php
+            }
+            ?>
+            <?php
+            if (empty($_SESSION['user'])) {
+            ?>
+              <input type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary" value="Already Have File">
+            <?php
+            }
+            ?>
           </div>
         </form>
       </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Search for your file</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <form action="" method="post">
+                  <label for="token" class="form-label">Token</label>
+                  <input class="form-control" type="text" name="user_token" v-model="user_token" id="user_token" placeholder="Enter your token">
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" @click="checkFile()" class="btn btn-primary">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div id="calendar" class="d-none">
+
+      </div>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -15,7 +15,7 @@ $item = new user($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$item->user_id = $data->user_id;
+// $item->user_id = $data->user_id;
 
 // user values
 $item->user_token = $data->user_token;

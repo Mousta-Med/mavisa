@@ -15,15 +15,13 @@ if (empty($_GET['page'])) {
             require "app/controllers/read.api.php";
             break;
         case "single_read":
-            $iod = $URL[1];
-            if (empty($iod)) {
-                require "app/views/404.view.php";
-            } else {
-                require "app/controllers/single_read.api.php";
-            }
+            require "app/controllers/single_read.api.php";
             break;
         case "create":
             require "app/controllers/create.api.php";
+            break;
+        case "booking":
+            require "app/controllers/booking.api.php";
             break;
         case "update":
             require "app/controllers/update.api.php";
@@ -38,7 +36,7 @@ if (empty($_GET['page'])) {
             $homecontroller->filepage();
             break;
         case "login":
-            require "app/views/login.view.php";
+            require "app/controllers/login.api.php";
             break;
         case "logout":
             $homecontroller->logout();
