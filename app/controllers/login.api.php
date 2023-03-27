@@ -32,6 +32,7 @@ if ($res) {
             "voyage_document_number" => $item->voyage_document_number
         );
         $_SESSION['user'] = $item->user_firstname;
+        $_SESSION['user_token'] = $data->user_token;
         http_response_code(200);
         echo json_encode($user_arr);
     }

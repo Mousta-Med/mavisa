@@ -84,7 +84,6 @@ class user
         $stmt->execute();
         $dataRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->user_token = $dataRow['user_token'];
         $this->user_firstname = $dataRow['user_firstname'];
         $this->user_lastname = $dataRow['user_lastname'];
         $this->user_birthdate = $dataRow['user_birthdate'];
@@ -159,8 +158,8 @@ class user
 
     function login($token)
     {
-        $fetch_user_by_email = "SELECT * FROM `user` WHERE `user_token`=:token";
-        $query_stmt = $this->conn->prepare($fetch_user_by_email);
+        $fetch_user_by_token = "SELECT * FROM `user` WHERE `user_token`=:token";
+        $query_stmt = $this->conn->prepare($fetch_user_by_token);
         $query_stmt->bindValue(':token', $token, PDO::PARAM_STR);
         $query_stmt->execute();
         $result = $query_stmt->fetch(PDO::FETCH_ASSOC);
@@ -170,7 +169,25 @@ class user
             return false;
         }
     }
-    function book($date)
+    function book($date, $user_id)
     {
+        // $fetch_reservation = "SELECT * FROM `reservation` WHERE `reservation_date`=:date AND `09:15`=0 OR `10:15`=0 OR `11:15`=0 OR `14:15`=0 OR `15:15`=0 ";
+        // $query_stmt = $this->conn->prepare($fetch_reservation);
+        // $query_stmt->bindValue(':date', $date, PDO::PARAM_STR);
+        // $query_stmt->execute();
+        $fetch_reservation = "SELECT * FROM `reservation` WHERE `reservation_date`=:date AND (`09:15`=0 OR `10:15`=0 OR `11:15`=0 OR `14:15`=0 OR `15:15`=0)";
+        $query_stmt = $this->conn->prepare($fetch_reservation);
+        $query_stmt->bindValue(':date', $date, PDO::PARAM_STR);
+        $query_stmt->execute();
+        $result = $query_stmt->fetch(PDO::FETCH_ASSOC);
+        if (!empty($result)) {
+            return $result;
+        } else {
+            $sqlQuery = "INSERT INTO `reservation` (`reservation_date`, `user_id`, `09:15`, `10:15`, `11:15`, `14:15`, `15:15`) 
+              VALUES (:date, '$user_id', 0, 0, 0, 0, 0)";
+            $query_stmt = $this->conn->prepare($sqlQuery);
+            $query_stmt->bindValue(':date', $date, PDO::PARAM_STR);
+            $query_stmt->execute();
+        }
     }
 }

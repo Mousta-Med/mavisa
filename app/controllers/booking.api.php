@@ -12,27 +12,36 @@ $db = $database->getConnection();
 $item = new user($db);
 $data = json_decode(file_get_contents("php://input"));
 
-$result = $item->book($data->selectedDate);
 $res = $item->login($data->user_token);
 $id = $res['user_id'];
-if ($res) {
-    $item->user_id = isset($id) ? $id : die();
-    // $item->getSingleUser();
-    // $user_arr = array(
-    //     "user_firstname" => $item->user_firstname,
-    //     "user_lastname" => $item->user_lastname,
-    //     "user_birthdate" => $item->user_birthdate,
-    //     "user_nationality" => $item->user_nationality,
-    //     "family_situation" => $item->family_situation,
-    //     "user_adresse" => $item->user_adresse,
-    //     "visa_type" => $item->visa_type,
-    //     "Date_of_departure" => $item->Date_of_departure,
-    //     "arrival_date" => $item->arrival_date,
-    //     "voyage_document_type" => $item->voyage_document_type,
-    //     "voyage_document_number" => $item->voyage_document_number
+$date = date("Y-m-d", strtotime($data->selectedDate));
+$result = $item->book($date, $id);
+if (!empty($result)) {
+    $available_time = array(
+        "09:15" => $result['09:15'],
+        "10:15" => $result['10:15'],
+        "11:15" => $result['11:15'],
+        "14:15" => $result['14:15'],
+        "15:15" => $result['15:15'],
+        "selectedDate" => $date,
+        "user_token" => $data->user_token,
+        "id" => $id,
+    );
     http_response_code(200);
-    // echo json_encode($user_arr);
-    echo json_encode("oryaaaaa");
+    echo json_encode($available_time);
+} elseif (!empty($res)) {
+    $available_time = array(
+        "09:15" => 0,
+        "10:15" => 0,
+        "11:15" => 0,
+        "14:15" => 0,
+        "15:15" => 0,
+        "selectedDate" => $date,
+        "user_token" => $data->user_token,
+        "id" => $id,
+    );
+    http_response_code(200);
+    echo json_encode($available_time);
 } else {
     http_response_code(404);
     echo json_encode("just bullshit");

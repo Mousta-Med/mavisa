@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="/MaVisa/public/css/style.css" />
     <link rel="stylesheet" type="text/css" href="/MaVisa/public/css/main.min.css" />
     <script src="/mavisa/public/js/main.min.js"></script>
@@ -72,6 +74,7 @@
             ?>
             <div id="calendar"></div>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <p id="token"><?= $_SESSION['user_token'] ?></p>
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

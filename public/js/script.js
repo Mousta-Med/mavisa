@@ -31,53 +31,49 @@ var app = new Vue({
       this.voyage_document_number = userData.voyage_document_number;
       this.voyage_document_type = userData.voyage_document_type;
     }
-    // this.getUsers();
-    document.addEventListener("DOMContentLoaded", function () {
-      var calendarEl = document.getElementById("calendar");
-      var futureDate = new Date();
-      futureDate.setMonth(new Date().getMonth() + 3);
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-          left: "prev,next",
-          center: "title",
-          right: "dayGridMonth",
+    var calendarEl = document.getElementById("calendar");
+    var futureDate = new Date();
+    futureDate.setMonth(new Date().getMonth() + 3);
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: "prev,next",
+        center: "title",
+        right: "dayGridMonth",
+      },
+      initialDate: new Date(),
+      validRange: {
+        start: new Date(), // example start date
+        end: futureDate, // example end date
+      },
+      selectable: true,
+      events: [
+        {
+          start: "2023-03-27",
+          // end: "2023-03-27",
+          overlap: false,
+          display: "background",
+          color: "#ff9f89",
         },
-        initialDate: new Date(),
-        validRange: {
-          start: new Date(), // example start date
-          end: futureDate, // example end date
-        },
-        selectable: true,
-        events: [
-          {
-            start: "2023-03-27",
-            // end: "2023-03-27",
-            overlap: false,
-            display: "background",
-            color: "#ff9f89",
-          },
-        ],
-        select: function (info) {
-          var selectedDate = info.start.toLocaleString();
-          const storedToken = localStorage.getItem("token");
-          const token = JSON.parse(storedToken);
-          axios
-            .post("http://localhost/mavisa/booking", {
-              user_token: token.token,
-              selectedDate: selectedDate,
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          jQuery("#exampleModal").modal("show");
-        },
-      });
-
-      calendar.render();
+      ],
+      select: function (info) {
+        var selectedDate = info.start;
+        const storedToken = localStorage.getItem("token");
+        const token = JSON.parse(storedToken);
+        axios
+          .post("http://localhost/mavisa/booking", {
+            user_token: token.token,
+            selectedDate: selectedDate,
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        jQuery("#exampleModal").modal("show");
+      },
     });
+    calendar.render();
+    var copyText = document.getElementById("token");
     if (copyText) {
-      var copyText = document.getElementById("token").innerHTML;
-      var token = { token: copyText };
+      var token = { token: copyText.innerHTML };
       localStorage.setItem("token", JSON.stringify(token));
     }
   },
@@ -248,6 +244,7 @@ var app = new Vue({
 
     resetForm: function () {
       localStorage.removeItem("userData");
+      localStorage.removeItem("token");
       window.location.href = "logout";
     },
     copytoclipboard: function () {
