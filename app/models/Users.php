@@ -171,11 +171,37 @@ class user
     }
     function book($date)
     {
-        $fetch_reservation = "SELECT * FROM `reservation` WHERE `reservation_date`=:date ";
+        $fetch_reservation = "SELECT time FROM `reservation` WHERE `reservation_date`=:date ";
         $query_stmt = $this->conn->prepare($fetch_reservation);
         $query_stmt->bindValue(':date', $date, PDO::PARAM_STR);
-        $query_stmt->execute();
-        $result = $query_stmt->fetch(PDO::FETCH_ASSOC);
-        return $result;
+
+        if ($query_stmt->execute()) {
+            return $query_stmt;
+        } else {
+            return false;
+        }
+    }
+    function booking($date, $time, $id)
+    {
+        $fetch_reservation = "INSERT INTO `reservation` (`reservation_date`, `user_id`, `time`) VALUES (:date, :id, :time);";
+        $query_stmt = $this->conn->prepare($fetch_reservation);
+        $query_stmt->bindValue(':date', $date, PDO::PARAM_STR);
+        $query_stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $query_stmt->bindValue(':time', $time, PDO::PARAM_STR);
+        return $query_stmt->execute();
+    }
+
+    public function userreservation($id)
+    {
+        $query = "SELECT * FROM reservation WHERE user_id = :user_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":user_id", $id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

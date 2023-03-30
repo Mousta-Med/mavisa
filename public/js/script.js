@@ -13,9 +13,14 @@ var app = new Vue({
     arrival_date: "",
     voyage_document_number: "",
     voyage_document_type: "",
+    time: "",
     users: [],
+    reservedTimes: [],
+    filteredTimes: []
   },
   mounted: function () {
+    const times = ["09:15", "10:15", "11:15", "14:15", "15:15"];
+    const timesSelect = document.querySelector('#resrvation_time');
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
       const userData = JSON.parse(storedUserData);
@@ -57,18 +62,41 @@ var app = new Vue({
       ],
       select: function (info) {
         var selectedDate = info.start;
+        localStorage.setItem("date", selectedDate);
         const storedToken = localStorage.getItem("token");
         const token = JSON.parse(storedToken);
         axios
           .post("http://localhost/mavisa/booking", {
             user_token: token.token,
             selectedDate: selectedDate,
+            stat: "check",
+          }).then(({ data }) => {
+            this.reservedTimes = data.map((time) => {
+              return time;
+            })
+            this.filteredTimes = times.filter((time) => {
+              return !this.reservedTimes.includes(time)
+            })
+            if (this.filteredTimes.length !== 0) {
+              this.filteredTimes.map((time) => {
+                timesSelect.innerHTML += `<option value="${time}">${time}</option>`;
+              })
+              document.getElementById('book').removeAttribute('disabled');
+              document.getElementById('book').classList.remove('d-none');
+            } else {
+              timesSelect.innerHTML = '<option readonly>No Time</option>'
+              document.getElementById('book').setAttribute('disabled', 'disabled');
+              document.getElementById('book').classList.add('d-none');
+            }
           })
           .catch(function (error) {
             console.log(error);
           });
+        timesSelect.innerHTML = ''
         jQuery("#exampleModal").modal("show");
       },
+
+
     });
     calendar.render();
     var copyText = document.getElementById("token");
@@ -79,26 +107,6 @@ var app = new Vue({
   },
 
   methods: {
-    // getUsers: function () {
-    //   axios
-    //     .get("http://localhost/mavisa/read")
-    //     .then(function (response) {
-    //       app.users = response.data;
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
-    // getingletUsers: function () {
-    //   axios
-    //     .get("http://localhost/mavisa/single_read")
-    //     .then(function (response) {
-    //       app.users = response.data;
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
     onsubmit: function () {
       if (
         this.user_firstname !== "" &&
@@ -152,6 +160,27 @@ var app = new Vue({
       } else {
         alert("all field are required");
       }
+    },
+    Valid: function () {
+      const storedToken = localStorage.getItem("token");
+      const token = JSON.parse(storedToken);
+      const storeddate = localStorage.getItem("date");
+      const date = storeddate;
+      axios
+        .post("http://localhost/mavisa/booking", {
+          user_token: token.token,
+          selectedDate: date,
+          time: this.time,
+          stat: "validate",
+        }).then((response) => {
+          alert("You have been reserved successfully");
+          jQuery("#exampleModal").modal("hide");
+        })
+        .catch(function (error) {
+          console.log(error);
+          alert("You already have a reservation");
+          jQuery("#exampleModal").modal("hide");
+        });
     },
     checkFile: function () {
       if (this.user_token !== "") {
@@ -245,12 +274,14 @@ var app = new Vue({
     resetForm: function () {
       localStorage.removeItem("userData");
       localStorage.removeItem("token");
+      localStorage.removeItem("date");
       window.location.href = "logout";
     },
     copytoclipboard: function () {
       var copyText = document.getElementById("token").innerHTML;
       navigator.clipboard.writeText(copyText);
       alert("Your token copied to clipboard");
+      location.reload();
     },
   },
 });

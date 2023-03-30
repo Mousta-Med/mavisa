@@ -15,12 +15,29 @@ $data = json_decode(file_get_contents("php://input"));
 $res = $item->login($data->user_token);
 $id = $res['user_id'];
 $date = date("Y-m-d", strtotime($data->selectedDate));
-$result = $item->book($date);
-if (!empty($result)) {
-    $available_time = $result['time'];
-    http_response_code(200);
-    echo json_encode($available_time);
+if (isset($data->time)) {
+    $time = $data->time;
+}
+if ($data->stat == "check") {
+    $result = $item->book($date);
+    $times = $result->fetchAll(PDO::FETCH_COLUMN);
+
+    if (isset($result)) {
+        http_response_code(200);
+        echo json_encode($times);
+    } else {
+        http_response_code(404);
+        echo json_encode("There is no time");
+    }
 } else {
-    http_response_code(404);
-    echo json_encode("just bullshit");
+    $query = $item->userreservation($id);
+
+    if ($query) {
+        $stmt = $item->booking($date, $time, $id);
+        http_response_code(200);
+        echo json_encode("You have been reserved successfully");
+    } else {
+        http_response_code(404);
+        echo json_encode("You already have a reservation");
+    }
 }

@@ -22,7 +22,6 @@ class homecontroller
     public function  filepage()
     {
         if (!isset($_SESSION['user'])) {
-            // require "app/views/updatefile.view.php";
             require "app/views/file.view.php";
         } else {
             require "app/views/file.view.php";

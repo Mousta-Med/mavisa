@@ -19,6 +19,7 @@
 
 </head>
 
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-sm navbar-dark bg-black">
@@ -73,8 +74,11 @@
             unset($_SESSION['token']);
             ?>
             <div id="calendar"></div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <?php
+            if (isset($_SESSION['user_token'])) { ?>
                 <p id="token"><?= $_SESSION['user_token'] ?></p>
+            <?php } ?>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -83,17 +87,13 @@
                         </div>
                         <div class="modal-body">
                             <label for="resrvation_time">Resrvation Time</label>
-                            <select class="form-control" name="resrvation_time" id="resrvation_time">
-                                <option value="09:15">09:15</option>
-                                <option value="10:15">10:15</option>
-                                <option value="11:15">11:15</option>
-                                <option value="14:15">14:15</option>
-                                <option value="15:15">15:15</option>
+                            <select class="form-control" name="resrvation_time" v-model="time" id="resrvation_time">
+
                             </select>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button id="book" type="button" @click="Valid()" class="btn btn-primary">Book</button>
                         </div>
                     </div>
                 </div>
