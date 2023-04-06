@@ -38,6 +38,9 @@ if (empty($_GET['page'])) {
         case "login":
             require "app/controllers/login.api.php";
             break;
+        case "events":
+            require "app/controllers/events.api.php";
+            break;
         case "logout":
             $homecontroller->logout();
             break;

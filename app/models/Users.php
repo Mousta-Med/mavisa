@@ -204,4 +204,11 @@ class user
             return true;
         }
     }
+    public function getEvents()
+    {
+        $sqlQuery = "SELECT * FROM reservation GROUP BY reservation_date HAVING COUNT(reservation_date) = 5;";
+        $stmt = $this->conn->prepare($sqlQuery);
+        $stmt->execute();
+        return $stmt;
+    }
 }

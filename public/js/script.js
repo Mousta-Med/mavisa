@@ -36,6 +36,18 @@ var app = new Vue({
       this.voyage_document_number = userData.voyage_document_number;
       this.voyage_document_type = userData.voyage_document_type;
     }
+    axios.get("http://localhost/mavisa/events").then(function (response) {
+      var events = [];
+      // Parse the response and convert it to the format expected by FullCalendar
+      response.data.forEach(function (event) {
+        events.push({
+          date: event.date,
+          display: "background",
+          color: "red",
+        });
+      });
+      calendar.addEventSource(events);
+    });
     var calendarEl = document.getElementById("calendar");
     var futureDate = new Date();
     futureDate.setMonth(new Date().getMonth() + 3);
@@ -51,15 +63,7 @@ var app = new Vue({
         end: futureDate, // example end date
       },
       selectable: true,
-      events: [
-        {
-          start: "2023-03-27",
-          // end: "2023-03-27",
-          overlap: false,
-          display: "background",
-          color: "#ff9f89",
-        },
-      ],
+
       select: function (info) {
         var selectedDate = info.start;
         localStorage.setItem("date", selectedDate);
@@ -95,9 +99,8 @@ var app = new Vue({
         timesSelect.innerHTML = ''
         jQuery("#exampleModal").modal("show");
       },
-
-
     });
+
     calendar.render();
     var copyText = document.getElementById("token");
     if (copyText) {
