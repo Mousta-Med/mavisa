@@ -82,6 +82,7 @@ var app = new Vue({
               return !this.reservedTimes.includes(time)
             })
             if (this.filteredTimes.length !== 0) {
+              timesSelect.innerHTML = `<option value="" selected>Select Time</option>`;
               this.filteredTimes.map((time) => {
                 timesSelect.innerHTML += `<option value="${time}">${time}</option>`;
               })
